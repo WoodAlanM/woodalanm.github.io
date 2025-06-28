@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Top-Aligned Search</title>
+  <title>Search Movies and TV Shows</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -34,13 +34,41 @@
 
   <div class="container pt-4">
     <h2 class="mb-3 text-center">Search Titles</h2>
-    <div class="position-relative mx-auto" style="max-width: 400px;">
-      <input type="text" id="searchBox" class="form-control" placeholder="Start typing...">
-      <div id="autocomplete-list" class="autocomplete-list"></div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="movies-tab" data-bs-toggle="tab" data-bs-target="#movies" type="button" role="tab">Movies</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tvshows-tab" data-bs-toggle="tab" data-bs-target="#tvshows" type="button" role="tab">TV Shows</button>
+      </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content mt-3">
+      <!-- Movies Tab -->
+      <div class="tab-pane fade show active" id="movies" role="tabpanel">
+        <div class="position-relative mx-auto" style="max-width: 400px;">
+          <input type="text" id="searchBoxMovies" class="form-control" placeholder="Search Movies...">
+          <div id="autocomplete-list-movies" class="autocomplete-list"></div>
+        </div>
+      </div>
+
+      <!-- TV Shows Tab -->
+      <div class="tab-pane fade" id="tvshows" role="tabpanel">
+        <div class="position-relative mx-auto" style="max-width: 400px;">
+          <input type="text" id="searchBoxTV" class="form-control" placeholder="Search TV Shows...">
+          <div id="autocomplete-list-tv" class="autocomplete-list"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Bootstrap JS Bundle (needed for tabs to work) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/movies-autocomplete.js"></script>
 
 </body>
 </html>

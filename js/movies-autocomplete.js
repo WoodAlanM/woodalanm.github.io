@@ -1,38 +1,52 @@
-let titles = [];
+let movieTitles = [];
+let tvShowTitles = [];
 
-// Load CSV and parse
 fetch('../movies.csv')
-    .then(response => response.text())
-    .then(text => {
-    titles = text.split('\n').map(line => line.trim()).filter(line => line);
-    });
+  .then(response => response.text())
+  .then(text => {
+    movieTitles = text.split('\n').map(line => line.trim()).filter(line => line);
+    setupAutocomplete('searchBoxMovies', 'autocomplete-list-movies', movieTitles);
+  });
 
-const searchBox = document.getElementById('searchBox');
-const list = document.getElementById('autocomplete-list');
+fetch('../tv-shows.csv')
+  .then(response => response.text())
+  .then(text => {
+    tvShowTitles = text.split('\n').map(line => line.trim()).filter(line => line);
+    setupAutocomplete('searchBoxTV', 'autocomplete-list-tv', tvShowTitles);
+  });
 
-searchBox.addEventListener('input', function() {
+function setupAutocomplete(inputId, listId, dataArray) {
+  const searchBox = document.getElementById(inputId);
+  const list = document.getElementById(listId);
+
+  searchBox.addEventListener('input', function() {
     const query = this.value.toLowerCase();
     list.innerHTML = '';
 
     if (query.length === 0) return;
 
-    const matches = titles.filter(title => title.toLowerCase().includes(query)).slice(0, 10);
+    const matches = dataArray.filter(title => title.toLowerCase().includes(query)).slice(0, 10);
 
     matches.forEach(title => {
-    const item = document.createElement('div');
-    item.classList.add('autocomplete-item');
-    item.textContent = title;
-    item.addEventListener('click', () => {
+      const item = document.createElement('div');
+      item.classList.add('autocomplete-item');
+      item.textContent = title;
+      item.addEventListener('click', () => {
         searchBox.value = title;
         list.innerHTML = '';
+      });
+      list.appendChild(item);
     });
-    list.appendChild(item);
-    });
-});
+  });
 
-// Close the autocomplete when clicking outside
-document.addEventListener('click', function(e) {
+  // Hide autocomplete when clicking outside
+  document.addEventListener('click', function(e) {
     if (e.target !== searchBox) {
-    list.innerHTML = '';
+      list.innerHTML = '';
     }
-});
+  });
+}
+
+// Setup both autocompletes
+setupAutocomplete('searchBoxMovies', 'autocomplete-list-movies', movieTitles);
+setupAutocomplete('searchBoxTV', 'autocomplete-list-tv', tvShowTitles);
